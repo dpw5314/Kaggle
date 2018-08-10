@@ -1,0 +1,19 @@
+-- Query 10 -- Like a small search engine, search all rows that include the specific word.
+select * 
+from notes 
+where match(Text) against ($user_input_from_php); -- It won't search the words like I, is, am .....
+
+
+-- Notes table needs to be updated as well
+
+Create table NOTES(
+Note_DBID VARCHAR(10),
+NotesDate date,
+notes_Status char(6),
+Note_Operator_Initial  VARCHAR(10),
+Text varchar(255),
+Note_TimeStamp timestamp,
+   CONSTRAINT NOTES_pk primary key (Note_DBID),
+   fulltext(Text)
+
+)engine = INNODB;
