@@ -1,0 +1,27 @@
+-- Query 4 general query to find any note corresponding to the ids entered
+
+select notes.note_dbid, notes.text, notes.NotesDate
+from notes, participants_notes, donations_notes, event_notes, appeals_notes, pledge_notes, mode_payment_notes
+
+where participants_notes.participant_dbid = $php_input_participant_id
+	and donations_notes.donation_dbid = $php_input_donations_id
+	and event_notes.event_dbid = $php_input_event_id
+	and pledge_notes.pledge_dbid = $php_pledge_id
+	and mode_payment_notes.Tranction_ID = $input_transaction_id
+	and (participants_notes.note_dbid = notes.note_dbid or donations_notes.note_dbid = notes.note_dbid or event_notes.note_dbid = notes.note_dbid or 
+	pledge_notes.note_dbid= notes.note_dbid or mode_payment_notes.note_dbid = notes.note_dbid); 
+
+
+
+
+-- Query 9
+-- list every the donation_ID and participants_ID for a specific event
+select do.donation_DBID as 'donation_DBID', 
+	tb1.PARTICIPANTS_DBID_EVENT as 'PARTICIPANTS_DBID',
+	tb1.event_name as 'event_name'
+from 
+(	select eve.EVENTName as 'event_name', par.PARTICIPANT_DBID as 'PARTICIPANTS_DBID_EVENT'
+	from EVENT eve, EVENTS_ATTEND attend, PARTICIPANTS par
+	where eve.event_DBID=attend.event_DBID and attend.PARTICIPANT_DBID = par.PARTICIPANT_DBID ) tb1, donations do
+where do.PARTICIPANT_DBID = tb1.PARTICIPANTS_DBID_EVENT and tb1.event_name = '123'
+;
